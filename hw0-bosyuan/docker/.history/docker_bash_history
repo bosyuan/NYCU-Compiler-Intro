@@ -1,0 +1,4 @@
+ls
+make
+git push
+sudo apt install git
