@@ -1,0 +1,2985 @@
+Terminals unused in grammar
+
+   KWDEF
+
+
+State 107 conflicts: 13 shift/reduce
+State 108 conflicts: 8 shift/reduce
+State 142 conflicts: 13 shift/reduce
+State 143 conflicts: 13 shift/reduce
+State 144 conflicts: 13 shift/reduce
+State 145 conflicts: 13 shift/reduce
+State 146 conflicts: 13 shift/reduce
+State 147 conflicts: 13 shift/reduce
+State 148 conflicts: 13 shift/reduce
+State 149 conflicts: 13 shift/reduce
+State 150 conflicts: 8 shift/reduce
+State 151 conflicts: 8 shift/reduce
+State 152 conflicts: 8 shift/reduce
+State 153 conflicts: 8 shift/reduce
+State 154 conflicts: 8 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: ID SEMICOLON variable_constant_declaration function_declaration_definition compound_statement KWEND
+
+    2 function_declaration: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type SEMICOLON
+    3                     | ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE SEMICOLON
+
+    4 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type compound_statement KWEND
+    5                    | ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE compound_statement KWEND
+
+    6 function_declaration_definition: %empty
+    7                                | function_declaration_definition_list
+
+    8 function_declaration_definition_list: function_declaration
+    9                                     | function_definition
+   10                                     | function_declaration_definition_list function_declaration
+   11                                     | function_declaration_definition_list function_definition
+
+   12 formal_argument: identifier_list COLON type
+
+   13 formal_argument_list: %empty
+   14                     | formal_arguments
+
+   15 formal_arguments: formal_argument
+   16                 | formal_arguments COMMA formal_argument
+
+   17 identifier_list: ID
+   18                | identifier_list COMMA ID
+
+   19 variable_declaration: KWVAR identifier_list COLON scalar_type SEMICOLON
+   20                     | KWVAR identifier_list COLON KWARRAY integer_constant KWOF type SEMICOLON
+
+   21 integer_constant: INTEGER
+   22                 | OCT_INTEGER
+
+   23 constant_declaration: KWVAR identifier_list COLON literal_constant SEMICOLON
+
+   24 literal_constant: INTEGER
+   25                 | KWTRUE
+   26                 | KWFALSE
+   27                 | OCT_INTEGER
+   28                 | FLOAT
+   29                 | SCIENTIFIC
+   30                 | STRING
+
+   31 variable_constant_declaration: %empty
+   32                              | variable_constant_declaration_list
+
+   33 variable_constant_declaration_list: variable_declaration
+   34                                   | constant_declaration
+   35                                   | variable_constant_declaration_list variable_declaration
+   36                                   | variable_constant_declaration_list constant_declaration
+
+   37 statemet: compound_statement
+   38         | simple_statement
+   39         | conditional_statement
+   40         | while_statement
+   41         | for_statement
+   42         | return_statemet
+   43         | fucntion_call_statement
+
+   44 statemets: %empty
+   45          | statemet_list
+
+   46 statemet_list: statemet
+   47              | statemet_list statemet
+
+   48 compound_statement: KWBEGIN variable_constant_declaration statemets KWEND
+
+   49 simple_statement: variable_reference COLONEQUAL expression SEMICOLON
+   50                 | KWPRINT expression SEMICOLON
+   51                 | KWREAD variable_reference SEMICOLON
+
+   52 variable_reference: ID
+   53                   | ID array_indexs
+
+   54 array_index_number: expression
+
+   55 array_indexs: LEFTBRACKET array_index_number RIGHTBRACKET
+   56             | array_indexs LEFTBRACKET integer_constant RIGHTBRACKET
+
+   57 conditional_statement: KWIF expression KWTHEN compound_statement KWELSE compound_statement KWEND KWIF
+   58                      | KWIF expression KWTHEN compound_statement KWEND KWIF
+
+   59 while_statement: KWWHILE expression KWDO compound_statement KWEND KWDO
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant KWTO integer_constant KWDO compound_statement KWEND KWDO
+
+   61 return_statemet: KWRETURN expression SEMICOLON
+
+   62 fucntion_call_statement: ID LEFTPARENTHESE expressions RIGHTPARENTHESE SEMICOLON
+
+   63 function_call_nosemi: ID LEFTPARENTHESE expressions RIGHTPARENTHESE
+
+   64 expressions: %empty
+   65            | expression_list
+
+   66 expression_list: expression
+   67                | expression_list COMMA expression
+
+   68 expression: literal_constant
+   69           | variable_reference
+   70           | function_call_nosemi
+   71           | arithmetic_expression
+
+   72 arithmetic_expression: MINUS expression
+   73                      | expression MULT expression
+   74                      | expression DIV expression
+   75                      | expression MOD expression
+   76                      | expression PLUS expression
+   77                      | expression MINUS expression
+   78                      | expression SMALLER expression
+   79                      | expression SMALLEREQUAL expression
+   80                      | expression SMALLERBIGGER expression
+   81                      | expression BIGGEREQUAL expression
+   82                      | expression BIGGER expression
+   83                      | expression EQUAL expression
+   84                      | expression AND expression
+   85                      | expression OR expression
+   86                      | NOT expression
+   87                      | LEFTPARENTHESE expression RIGHTPARENTHESE
+
+   88 scalar_type: KWINTEGER
+   89            | KWREAL
+   90            | KWSTRING
+   91            | KWBOOLEAN
+
+   92 type: scalar_type
+   93     | KWARRAY integer_constant KWOF type
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+KWRETURN (258) 61
+KWEND (259) 1 4 5 48 57 58 59 60
+KWBEGIN (260) 48
+KWPRINT (261) 50
+KWREAD (262) 51
+KWIF (263) 57 58
+KWELSE (264) 57
+KWTHEN (265) 57 58
+KWWHILE (266) 59
+KWDO (267) 59 60
+KWFOR (268) 60
+KWTO (269) 60
+KWOF (270) 20 93
+KWDEF (271)
+KWVAR (272) 19 20 23
+KWARRAY (273) 20 93
+KWINTEGER (274) 88
+KWBOOLEAN (275) 91
+KWREAL (276) 89
+KWSTRING (277) 90
+INTEGER (278) 21 24
+KWTRUE (279) 25
+KWFALSE (280) 26
+OCT_INTEGER (281) 22 27
+FLOAT (282) 28
+SCIENTIFIC (283) 29
+STRING (284) 30
+COLONEQUAL (285) 49 60
+LEFTBRACKET (286) 55 56
+RIGHTBRACKET (287) 55 56
+SEMICOLON (288) 1 2 3 19 20 23 49 50 51 61 62
+COLON (289) 2 4 12 19 20 23
+COMMA (290) 16 18 67
+ID (291) 1 2 3 4 5 17 18 52 53 60 62 63
+AND (292) 84
+OR (293) 85
+NOT (294) 86
+SMALLER (295) 78
+SMALLEREQUAL (296) 79
+SMALLERBIGGER (297) 80
+BIGGEREQUAL (298) 81
+BIGGER (299) 82
+EQUAL (300) 83
+MINUS (301) 72 77
+PLUS (302) 76
+DIV (303) 74
+MOD (304) 75
+MULT (305) 73
+LEFTPARENTHESE (306) 2 3 4 5 62 63 87
+RIGHTPARENTHESE (307) 2 3 4 5 62 63 87
+UMINUS (308)
+
+
+Nonterminals, with rules where they appear
+
+$accept (54)
+    on left: 0
+program (55)
+    on left: 1, on right: 0
+function_declaration (56)
+    on left: 2 3, on right: 8 10
+function_definition (57)
+    on left: 4 5, on right: 9 11
+function_declaration_definition (58)
+    on left: 6 7, on right: 1
+function_declaration_definition_list (59)
+    on left: 8 9 10 11, on right: 7 10 11
+formal_argument (60)
+    on left: 12, on right: 15 16
+formal_argument_list (61)
+    on left: 13 14, on right: 2 3 4 5
+formal_arguments (62)
+    on left: 15 16, on right: 14 16
+identifier_list (63)
+    on left: 17 18, on right: 12 18 19 20 23
+variable_declaration (64)
+    on left: 19 20, on right: 33 35
+integer_constant (65)
+    on left: 21 22, on right: 20 56 60 93
+constant_declaration (66)
+    on left: 23, on right: 34 36
+literal_constant (67)
+    on left: 24 25 26 27 28 29 30, on right: 23 68
+variable_constant_declaration (68)
+    on left: 31 32, on right: 1 48
+variable_constant_declaration_list (69)
+    on left: 33 34 35 36, on right: 32 35 36
+statemet (70)
+    on left: 37 38 39 40 41 42 43, on right: 46 47
+statemets (71)
+    on left: 44 45, on right: 48
+statemet_list (72)
+    on left: 46 47, on right: 45 47
+compound_statement (73)
+    on left: 48, on right: 1 4 5 37 57 58 59 60
+simple_statement (74)
+    on left: 49 50 51, on right: 38
+variable_reference (75)
+    on left: 52 53, on right: 49 51 69
+array_index_number (76)
+    on left: 54, on right: 55
+array_indexs (77)
+    on left: 55 56, on right: 53 56
+conditional_statement (78)
+    on left: 57 58, on right: 39
+while_statement (79)
+    on left: 59, on right: 40
+for_statement (80)
+    on left: 60, on right: 41
+return_statemet (81)
+    on left: 61, on right: 42
+fucntion_call_statement (82)
+    on left: 62, on right: 43
+function_call_nosemi (83)
+    on left: 63, on right: 70
+expressions (84)
+    on left: 64 65, on right: 62 63
+expression_list (85)
+    on left: 66 67, on right: 65 67
+expression (86)
+    on left: 68 69 70 71, on right: 49 50 54 57 58 59 61 66 67 72 73
+    74 75 76 77 78 79 80 81 82 83 84 85 86 87
+arithmetic_expression (87)
+    on left: 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87, on right:
+    71
+scalar_type (88)
+    on left: 88 89 90 91, on right: 2 4 19 92
+type (89)
+    on left: 92 93, on right: 12 20 93
+
+
+State 0
+
+    0 $accept: . program $end
+
+    ID  shift, and go to state 1
+
+    program  go to state 2
+
+
+State 1
+
+    1 program: ID . SEMICOLON variable_constant_declaration function_declaration_definition compound_statement KWEND
+
+    SEMICOLON  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 program: ID SEMICOLON . variable_constant_declaration function_declaration_definition compound_statement KWEND
+
+    KWVAR  shift, and go to state 5
+
+    $default  reduce using rule 31 (variable_constant_declaration)
+
+    variable_declaration                go to state 6
+    constant_declaration                go to state 7
+    variable_constant_declaration       go to state 8
+    variable_constant_declaration_list  go to state 9
+
+
+State 4
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 5
+
+   19 variable_declaration: KWVAR . identifier_list COLON scalar_type SEMICOLON
+   20                     | KWVAR . identifier_list COLON KWARRAY integer_constant KWOF type SEMICOLON
+   23 constant_declaration: KWVAR . identifier_list COLON literal_constant SEMICOLON
+
+    ID  shift, and go to state 10
+
+    identifier_list  go to state 11
+
+
+State 6
+
+   33 variable_constant_declaration_list: variable_declaration .
+
+    $default  reduce using rule 33 (variable_constant_declaration_list)
+
+
+State 7
+
+   34 variable_constant_declaration_list: constant_declaration .
+
+    $default  reduce using rule 34 (variable_constant_declaration_list)
+
+
+State 8
+
+    1 program: ID SEMICOLON variable_constant_declaration . function_declaration_definition compound_statement KWEND
+
+    ID  shift, and go to state 12
+
+    $default  reduce using rule 6 (function_declaration_definition)
+
+    function_declaration                  go to state 13
+    function_definition                   go to state 14
+    function_declaration_definition       go to state 15
+    function_declaration_definition_list  go to state 16
+
+
+State 9
+
+   32 variable_constant_declaration: variable_constant_declaration_list .
+   35 variable_constant_declaration_list: variable_constant_declaration_list . variable_declaration
+   36                                   | variable_constant_declaration_list . constant_declaration
+
+    KWVAR  shift, and go to state 5
+
+    $default  reduce using rule 32 (variable_constant_declaration)
+
+    variable_declaration  go to state 17
+    constant_declaration  go to state 18
+
+
+State 10
+
+   17 identifier_list: ID .
+
+    $default  reduce using rule 17 (identifier_list)
+
+
+State 11
+
+   18 identifier_list: identifier_list . COMMA ID
+   19 variable_declaration: KWVAR identifier_list . COLON scalar_type SEMICOLON
+   20                     | KWVAR identifier_list . COLON KWARRAY integer_constant KWOF type SEMICOLON
+   23 constant_declaration: KWVAR identifier_list . COLON literal_constant SEMICOLON
+
+    COLON  shift, and go to state 19
+    COMMA  shift, and go to state 20
+
+
+State 12
+
+    2 function_declaration: ID . LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type SEMICOLON
+    3                     | ID . LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE SEMICOLON
+    4 function_definition: ID . LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type compound_statement KWEND
+    5                    | ID . LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE compound_statement KWEND
+
+    LEFTPARENTHESE  shift, and go to state 21
+
+
+State 13
+
+    8 function_declaration_definition_list: function_declaration .
+
+    $default  reduce using rule 8 (function_declaration_definition_list)
+
+
+State 14
+
+    9 function_declaration_definition_list: function_definition .
+
+    $default  reduce using rule 9 (function_declaration_definition_list)
+
+
+State 15
+
+    1 program: ID SEMICOLON variable_constant_declaration function_declaration_definition . compound_statement KWEND
+
+    KWBEGIN  shift, and go to state 22
+
+    compound_statement  go to state 23
+
+
+State 16
+
+    7 function_declaration_definition: function_declaration_definition_list .
+   10 function_declaration_definition_list: function_declaration_definition_list . function_declaration
+   11                                     | function_declaration_definition_list . function_definition
+
+    ID  shift, and go to state 12
+
+    $default  reduce using rule 7 (function_declaration_definition)
+
+    function_declaration  go to state 24
+    function_definition   go to state 25
+
+
+State 17
+
+   35 variable_constant_declaration_list: variable_constant_declaration_list variable_declaration .
+
+    $default  reduce using rule 35 (variable_constant_declaration_list)
+
+
+State 18
+
+   36 variable_constant_declaration_list: variable_constant_declaration_list constant_declaration .
+
+    $default  reduce using rule 36 (variable_constant_declaration_list)
+
+
+State 19
+
+   19 variable_declaration: KWVAR identifier_list COLON . scalar_type SEMICOLON
+   20                     | KWVAR identifier_list COLON . KWARRAY integer_constant KWOF type SEMICOLON
+   23 constant_declaration: KWVAR identifier_list COLON . literal_constant SEMICOLON
+
+    KWARRAY      shift, and go to state 26
+    KWINTEGER    shift, and go to state 27
+    KWBOOLEAN    shift, and go to state 28
+    KWREAL       shift, and go to state 29
+    KWSTRING     shift, and go to state 30
+    INTEGER      shift, and go to state 31
+    KWTRUE       shift, and go to state 32
+    KWFALSE      shift, and go to state 33
+    OCT_INTEGER  shift, and go to state 34
+    FLOAT        shift, and go to state 35
+    SCIENTIFIC   shift, and go to state 36
+    STRING       shift, and go to state 37
+
+    literal_constant  go to state 38
+    scalar_type       go to state 39
+
+
+State 20
+
+   18 identifier_list: identifier_list COMMA . ID
+
+    ID  shift, and go to state 40
+
+
+State 21
+
+    2 function_declaration: ID LEFTPARENTHESE . formal_argument_list RIGHTPARENTHESE COLON scalar_type SEMICOLON
+    3                     | ID LEFTPARENTHESE . formal_argument_list RIGHTPARENTHESE SEMICOLON
+    4 function_definition: ID LEFTPARENTHESE . formal_argument_list RIGHTPARENTHESE COLON scalar_type compound_statement KWEND
+    5                    | ID LEFTPARENTHESE . formal_argument_list RIGHTPARENTHESE compound_statement KWEND
+
+    ID  shift, and go to state 10
+
+    $default  reduce using rule 13 (formal_argument_list)
+
+    formal_argument       go to state 41
+    formal_argument_list  go to state 42
+    formal_arguments      go to state 43
+    identifier_list       go to state 44
+
+
+State 22
+
+   48 compound_statement: KWBEGIN . variable_constant_declaration statemets KWEND
+
+    KWVAR  shift, and go to state 5
+
+    $default  reduce using rule 31 (variable_constant_declaration)
+
+    variable_declaration                go to state 6
+    constant_declaration                go to state 7
+    variable_constant_declaration       go to state 45
+    variable_constant_declaration_list  go to state 9
+
+
+State 23
+
+    1 program: ID SEMICOLON variable_constant_declaration function_declaration_definition compound_statement . KWEND
+
+    KWEND  shift, and go to state 46
+
+
+State 24
+
+   10 function_declaration_definition_list: function_declaration_definition_list function_declaration .
+
+    $default  reduce using rule 10 (function_declaration_definition_list)
+
+
+State 25
+
+   11 function_declaration_definition_list: function_declaration_definition_list function_definition .
+
+    $default  reduce using rule 11 (function_declaration_definition_list)
+
+
+State 26
+
+   20 variable_declaration: KWVAR identifier_list COLON KWARRAY . integer_constant KWOF type SEMICOLON
+
+    INTEGER      shift, and go to state 47
+    OCT_INTEGER  shift, and go to state 48
+
+    integer_constant  go to state 49
+
+
+State 27
+
+   88 scalar_type: KWINTEGER .
+
+    $default  reduce using rule 88 (scalar_type)
+
+
+State 28
+
+   91 scalar_type: KWBOOLEAN .
+
+    $default  reduce using rule 91 (scalar_type)
+
+
+State 29
+
+   89 scalar_type: KWREAL .
+
+    $default  reduce using rule 89 (scalar_type)
+
+
+State 30
+
+   90 scalar_type: KWSTRING .
+
+    $default  reduce using rule 90 (scalar_type)
+
+
+State 31
+
+   24 literal_constant: INTEGER .
+
+    $default  reduce using rule 24 (literal_constant)
+
+
+State 32
+
+   25 literal_constant: KWTRUE .
+
+    $default  reduce using rule 25 (literal_constant)
+
+
+State 33
+
+   26 literal_constant: KWFALSE .
+
+    $default  reduce using rule 26 (literal_constant)
+
+
+State 34
+
+   27 literal_constant: OCT_INTEGER .
+
+    $default  reduce using rule 27 (literal_constant)
+
+
+State 35
+
+   28 literal_constant: FLOAT .
+
+    $default  reduce using rule 28 (literal_constant)
+
+
+State 36
+
+   29 literal_constant: SCIENTIFIC .
+
+    $default  reduce using rule 29 (literal_constant)
+
+
+State 37
+
+   30 literal_constant: STRING .
+
+    $default  reduce using rule 30 (literal_constant)
+
+
+State 38
+
+   23 constant_declaration: KWVAR identifier_list COLON literal_constant . SEMICOLON
+
+    SEMICOLON  shift, and go to state 50
+
+
+State 39
+
+   19 variable_declaration: KWVAR identifier_list COLON scalar_type . SEMICOLON
+
+    SEMICOLON  shift, and go to state 51
+
+
+State 40
+
+   18 identifier_list: identifier_list COMMA ID .
+
+    $default  reduce using rule 18 (identifier_list)
+
+
+State 41
+
+   15 formal_arguments: formal_argument .
+
+    $default  reduce using rule 15 (formal_arguments)
+
+
+State 42
+
+    2 function_declaration: ID LEFTPARENTHESE formal_argument_list . RIGHTPARENTHESE COLON scalar_type SEMICOLON
+    3                     | ID LEFTPARENTHESE formal_argument_list . RIGHTPARENTHESE SEMICOLON
+    4 function_definition: ID LEFTPARENTHESE formal_argument_list . RIGHTPARENTHESE COLON scalar_type compound_statement KWEND
+    5                    | ID LEFTPARENTHESE formal_argument_list . RIGHTPARENTHESE compound_statement KWEND
+
+    RIGHTPARENTHESE  shift, and go to state 52
+
+
+State 43
+
+   14 formal_argument_list: formal_arguments .
+   16 formal_arguments: formal_arguments . COMMA formal_argument
+
+    COMMA  shift, and go to state 53
+
+    $default  reduce using rule 14 (formal_argument_list)
+
+
+State 44
+
+   12 formal_argument: identifier_list . COLON type
+   18 identifier_list: identifier_list . COMMA ID
+
+    COLON  shift, and go to state 54
+    COMMA  shift, and go to state 20
+
+
+State 45
+
+   48 compound_statement: KWBEGIN variable_constant_declaration . statemets KWEND
+
+    KWRETURN  shift, and go to state 55
+    KWBEGIN   shift, and go to state 22
+    KWPRINT   shift, and go to state 56
+    KWREAD    shift, and go to state 57
+    KWIF      shift, and go to state 58
+    KWWHILE   shift, and go to state 59
+    KWFOR     shift, and go to state 60
+    ID        shift, and go to state 61
+
+    $default  reduce using rule 44 (statemets)
+
+    statemet                 go to state 62
+    statemets                go to state 63
+    statemet_list            go to state 64
+    compound_statement       go to state 65
+    simple_statement         go to state 66
+    variable_reference       go to state 67
+    conditional_statement    go to state 68
+    while_statement          go to state 69
+    for_statement            go to state 70
+    return_statemet          go to state 71
+    fucntion_call_statement  go to state 72
+
+
+State 46
+
+    1 program: ID SEMICOLON variable_constant_declaration function_declaration_definition compound_statement KWEND .
+
+    $default  reduce using rule 1 (program)
+
+
+State 47
+
+   21 integer_constant: INTEGER .
+
+    $default  reduce using rule 21 (integer_constant)
+
+
+State 48
+
+   22 integer_constant: OCT_INTEGER .
+
+    $default  reduce using rule 22 (integer_constant)
+
+
+State 49
+
+   20 variable_declaration: KWVAR identifier_list COLON KWARRAY integer_constant . KWOF type SEMICOLON
+
+    KWOF  shift, and go to state 73
+
+
+State 50
+
+   23 constant_declaration: KWVAR identifier_list COLON literal_constant SEMICOLON .
+
+    $default  reduce using rule 23 (constant_declaration)
+
+
+State 51
+
+   19 variable_declaration: KWVAR identifier_list COLON scalar_type SEMICOLON .
+
+    $default  reduce using rule 19 (variable_declaration)
+
+
+State 52
+
+    2 function_declaration: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE . COLON scalar_type SEMICOLON
+    3                     | ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE . SEMICOLON
+    4 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE . COLON scalar_type compound_statement KWEND
+    5                    | ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE . compound_statement KWEND
+
+    KWBEGIN    shift, and go to state 22
+    SEMICOLON  shift, and go to state 74
+    COLON      shift, and go to state 75
+
+    compound_statement  go to state 76
+
+
+State 53
+
+   16 formal_arguments: formal_arguments COMMA . formal_argument
+
+    ID  shift, and go to state 10
+
+    formal_argument  go to state 77
+    identifier_list  go to state 44
+
+
+State 54
+
+   12 formal_argument: identifier_list COLON . type
+
+    KWARRAY    shift, and go to state 78
+    KWINTEGER  shift, and go to state 27
+    KWBOOLEAN  shift, and go to state 28
+    KWREAL     shift, and go to state 29
+    KWSTRING   shift, and go to state 30
+
+    scalar_type  go to state 79
+    type         go to state 80
+
+
+State 55
+
+   61 return_statemet: KWRETURN . expression SEMICOLON
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 88
+    arithmetic_expression  go to state 89
+
+
+State 56
+
+   50 simple_statement: KWPRINT . expression SEMICOLON
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 90
+    arithmetic_expression  go to state 89
+
+
+State 57
+
+   51 simple_statement: KWREAD . variable_reference SEMICOLON
+
+    ID  shift, and go to state 91
+
+    variable_reference  go to state 92
+
+
+State 58
+
+   57 conditional_statement: KWIF . expression KWTHEN compound_statement KWELSE compound_statement KWEND KWIF
+   58                      | KWIF . expression KWTHEN compound_statement KWEND KWIF
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 93
+    arithmetic_expression  go to state 89
+
+
+State 59
+
+   59 while_statement: KWWHILE . expression KWDO compound_statement KWEND KWDO
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 94
+    arithmetic_expression  go to state 89
+
+
+State 60
+
+   60 for_statement: KWFOR . ID COLONEQUAL integer_constant KWTO integer_constant KWDO compound_statement KWEND KWDO
+
+    ID  shift, and go to state 95
+
+
+State 61
+
+   52 variable_reference: ID .
+   53                   | ID . array_indexs
+   62 fucntion_call_statement: ID . LEFTPARENTHESE expressions RIGHTPARENTHESE SEMICOLON
+
+    LEFTBRACKET     shift, and go to state 96
+    LEFTPARENTHESE  shift, and go to state 97
+
+    $default  reduce using rule 52 (variable_reference)
+
+    array_indexs  go to state 98
+
+
+State 62
+
+   46 statemet_list: statemet .
+
+    $default  reduce using rule 46 (statemet_list)
+
+
+State 63
+
+   48 compound_statement: KWBEGIN variable_constant_declaration statemets . KWEND
+
+    KWEND  shift, and go to state 99
+
+
+State 64
+
+   45 statemets: statemet_list .
+   47 statemet_list: statemet_list . statemet
+
+    KWRETURN  shift, and go to state 55
+    KWBEGIN   shift, and go to state 22
+    KWPRINT   shift, and go to state 56
+    KWREAD    shift, and go to state 57
+    KWIF      shift, and go to state 58
+    KWWHILE   shift, and go to state 59
+    KWFOR     shift, and go to state 60
+    ID        shift, and go to state 61
+
+    $default  reduce using rule 45 (statemets)
+
+    statemet                 go to state 100
+    compound_statement       go to state 65
+    simple_statement         go to state 66
+    variable_reference       go to state 67
+    conditional_statement    go to state 68
+    while_statement          go to state 69
+    for_statement            go to state 70
+    return_statemet          go to state 71
+    fucntion_call_statement  go to state 72
+
+
+State 65
+
+   37 statemet: compound_statement .
+
+    $default  reduce using rule 37 (statemet)
+
+
+State 66
+
+   38 statemet: simple_statement .
+
+    $default  reduce using rule 38 (statemet)
+
+
+State 67
+
+   49 simple_statement: variable_reference . COLONEQUAL expression SEMICOLON
+
+    COLONEQUAL  shift, and go to state 101
+
+
+State 68
+
+   39 statemet: conditional_statement .
+
+    $default  reduce using rule 39 (statemet)
+
+
+State 69
+
+   40 statemet: while_statement .
+
+    $default  reduce using rule 40 (statemet)
+
+
+State 70
+
+   41 statemet: for_statement .
+
+    $default  reduce using rule 41 (statemet)
+
+
+State 71
+
+   42 statemet: return_statemet .
+
+    $default  reduce using rule 42 (statemet)
+
+
+State 72
+
+   43 statemet: fucntion_call_statement .
+
+    $default  reduce using rule 43 (statemet)
+
+
+State 73
+
+   20 variable_declaration: KWVAR identifier_list COLON KWARRAY integer_constant KWOF . type SEMICOLON
+
+    KWARRAY    shift, and go to state 78
+    KWINTEGER  shift, and go to state 27
+    KWBOOLEAN  shift, and go to state 28
+    KWREAL     shift, and go to state 29
+    KWSTRING   shift, and go to state 30
+
+    scalar_type  go to state 79
+    type         go to state 102
+
+
+State 74
+
+    3 function_declaration: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE SEMICOLON .
+
+    $default  reduce using rule 3 (function_declaration)
+
+
+State 75
+
+    2 function_declaration: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON . scalar_type SEMICOLON
+    4 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON . scalar_type compound_statement KWEND
+
+    KWINTEGER  shift, and go to state 27
+    KWBOOLEAN  shift, and go to state 28
+    KWREAL     shift, and go to state 29
+    KWSTRING   shift, and go to state 30
+
+    scalar_type  go to state 103
+
+
+State 76
+
+    5 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE compound_statement . KWEND
+
+    KWEND  shift, and go to state 104
+
+
+State 77
+
+   16 formal_arguments: formal_arguments COMMA formal_argument .
+
+    $default  reduce using rule 16 (formal_arguments)
+
+
+State 78
+
+   93 type: KWARRAY . integer_constant KWOF type
+
+    INTEGER      shift, and go to state 47
+    OCT_INTEGER  shift, and go to state 48
+
+    integer_constant  go to state 105
+
+
+State 79
+
+   92 type: scalar_type .
+
+    $default  reduce using rule 92 (type)
+
+
+State 80
+
+   12 formal_argument: identifier_list COLON type .
+
+    $default  reduce using rule 12 (formal_argument)
+
+
+State 81
+
+   52 variable_reference: ID .
+   53                   | ID . array_indexs
+   63 function_call_nosemi: ID . LEFTPARENTHESE expressions RIGHTPARENTHESE
+
+    LEFTBRACKET     shift, and go to state 96
+    LEFTPARENTHESE  shift, and go to state 106
+
+    $default  reduce using rule 52 (variable_reference)
+
+    array_indexs  go to state 98
+
+
+State 82
+
+   86 arithmetic_expression: NOT . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 107
+    arithmetic_expression  go to state 89
+
+
+State 83
+
+   72 arithmetic_expression: MINUS . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 108
+    arithmetic_expression  go to state 89
+
+
+State 84
+
+   87 arithmetic_expression: LEFTPARENTHESE . expression RIGHTPARENTHESE
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 109
+    arithmetic_expression  go to state 89
+
+
+State 85
+
+   68 expression: literal_constant .
+
+    $default  reduce using rule 68 (expression)
+
+
+State 86
+
+   69 expression: variable_reference .
+
+    $default  reduce using rule 69 (expression)
+
+
+State 87
+
+   70 expression: function_call_nosemi .
+
+    $default  reduce using rule 70 (expression)
+
+
+State 88
+
+   61 return_statemet: KWRETURN expression . SEMICOLON
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    SEMICOLON      shift, and go to state 110
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+
+State 89
+
+   71 expression: arithmetic_expression .
+
+    $default  reduce using rule 71 (expression)
+
+
+State 90
+
+   50 simple_statement: KWPRINT expression . SEMICOLON
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    SEMICOLON      shift, and go to state 124
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+
+State 91
+
+   52 variable_reference: ID .
+   53                   | ID . array_indexs
+
+    LEFTBRACKET  shift, and go to state 96
+
+    $default  reduce using rule 52 (variable_reference)
+
+    array_indexs  go to state 98
+
+
+State 92
+
+   51 simple_statement: KWREAD variable_reference . SEMICOLON
+
+    SEMICOLON  shift, and go to state 125
+
+
+State 93
+
+   57 conditional_statement: KWIF expression . KWTHEN compound_statement KWELSE compound_statement KWEND KWIF
+   58                      | KWIF expression . KWTHEN compound_statement KWEND KWIF
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    KWTHEN         shift, and go to state 126
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+
+State 94
+
+   59 while_statement: KWWHILE expression . KWDO compound_statement KWEND KWDO
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    KWDO           shift, and go to state 127
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+
+State 95
+
+   60 for_statement: KWFOR ID . COLONEQUAL integer_constant KWTO integer_constant KWDO compound_statement KWEND KWDO
+
+    COLONEQUAL  shift, and go to state 128
+
+
+State 96
+
+   55 array_indexs: LEFTBRACKET . array_index_number RIGHTBRACKET
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    array_index_number     go to state 129
+    function_call_nosemi   go to state 87
+    expression             go to state 130
+    arithmetic_expression  go to state 89
+
+
+State 97
+
+   62 fucntion_call_statement: ID LEFTPARENTHESE . expressions RIGHTPARENTHESE SEMICOLON
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    $default  reduce using rule 64 (expressions)
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expressions            go to state 131
+    expression_list        go to state 132
+    expression             go to state 133
+    arithmetic_expression  go to state 89
+
+
+State 98
+
+   53 variable_reference: ID array_indexs .
+   56 array_indexs: array_indexs . LEFTBRACKET integer_constant RIGHTBRACKET
+
+    LEFTBRACKET  shift, and go to state 134
+
+    $default  reduce using rule 53 (variable_reference)
+
+
+State 99
+
+   48 compound_statement: KWBEGIN variable_constant_declaration statemets KWEND .
+
+    $default  reduce using rule 48 (compound_statement)
+
+
+State 100
+
+   47 statemet_list: statemet_list statemet .
+
+    $default  reduce using rule 47 (statemet_list)
+
+
+State 101
+
+   49 simple_statement: variable_reference COLONEQUAL . expression SEMICOLON
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 135
+    arithmetic_expression  go to state 89
+
+
+State 102
+
+   20 variable_declaration: KWVAR identifier_list COLON KWARRAY integer_constant KWOF type . SEMICOLON
+
+    SEMICOLON  shift, and go to state 136
+
+
+State 103
+
+    2 function_declaration: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type . SEMICOLON
+    4 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type . compound_statement KWEND
+
+    KWBEGIN    shift, and go to state 22
+    SEMICOLON  shift, and go to state 137
+
+    compound_statement  go to state 138
+
+
+State 104
+
+    5 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE compound_statement KWEND .
+
+    $default  reduce using rule 5 (function_definition)
+
+
+State 105
+
+   93 type: KWARRAY integer_constant . KWOF type
+
+    KWOF  shift, and go to state 139
+
+
+State 106
+
+   63 function_call_nosemi: ID LEFTPARENTHESE . expressions RIGHTPARENTHESE
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    $default  reduce using rule 64 (expressions)
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expressions            go to state 140
+    expression_list        go to state 132
+    expression             go to state 133
+    arithmetic_expression  go to state 89
+
+
+State 107
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+   86                      | NOT expression .
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 86 (arithmetic_expression)]
+    OR             [reduce using rule 86 (arithmetic_expression)]
+    SMALLER        [reduce using rule 86 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 86 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 86 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 86 (arithmetic_expression)]
+    BIGGER         [reduce using rule 86 (arithmetic_expression)]
+    EQUAL          [reduce using rule 86 (arithmetic_expression)]
+    MINUS          [reduce using rule 86 (arithmetic_expression)]
+    PLUS           [reduce using rule 86 (arithmetic_expression)]
+    DIV            [reduce using rule 86 (arithmetic_expression)]
+    MOD            [reduce using rule 86 (arithmetic_expression)]
+    MULT           [reduce using rule 86 (arithmetic_expression)]
+    $default       reduce using rule 86 (arithmetic_expression)
+
+
+State 108
+
+   72 arithmetic_expression: MINUS expression .
+   73                      | expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+
+    AND            [reduce using rule 72 (arithmetic_expression)]
+    OR             [reduce using rule 72 (arithmetic_expression)]
+    SMALLER        [reduce using rule 72 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 72 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 72 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 72 (arithmetic_expression)]
+    BIGGER         [reduce using rule 72 (arithmetic_expression)]
+    EQUAL          [reduce using rule 72 (arithmetic_expression)]
+    $default       reduce using rule 72 (arithmetic_expression)
+
+
+State 109
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+   87                      | LEFTPARENTHESE expression . RIGHTPARENTHESE
+
+    AND              shift, and go to state 111
+    OR               shift, and go to state 112
+    SMALLER          shift, and go to state 113
+    SMALLEREQUAL     shift, and go to state 114
+    SMALLERBIGGER    shift, and go to state 115
+    BIGGEREQUAL      shift, and go to state 116
+    BIGGER           shift, and go to state 117
+    EQUAL            shift, and go to state 118
+    MINUS            shift, and go to state 119
+    PLUS             shift, and go to state 120
+    DIV              shift, and go to state 121
+    MOD              shift, and go to state 122
+    MULT             shift, and go to state 123
+    RIGHTPARENTHESE  shift, and go to state 141
+
+
+State 110
+
+   61 return_statemet: KWRETURN expression SEMICOLON .
+
+    $default  reduce using rule 61 (return_statemet)
+
+
+State 111
+
+   84 arithmetic_expression: expression AND . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 142
+    arithmetic_expression  go to state 89
+
+
+State 112
+
+   85 arithmetic_expression: expression OR . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 143
+    arithmetic_expression  go to state 89
+
+
+State 113
+
+   78 arithmetic_expression: expression SMALLER . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 144
+    arithmetic_expression  go to state 89
+
+
+State 114
+
+   79 arithmetic_expression: expression SMALLEREQUAL . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 145
+    arithmetic_expression  go to state 89
+
+
+State 115
+
+   80 arithmetic_expression: expression SMALLERBIGGER . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 146
+    arithmetic_expression  go to state 89
+
+
+State 116
+
+   81 arithmetic_expression: expression BIGGEREQUAL . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 147
+    arithmetic_expression  go to state 89
+
+
+State 117
+
+   82 arithmetic_expression: expression BIGGER . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 148
+    arithmetic_expression  go to state 89
+
+
+State 118
+
+   83 arithmetic_expression: expression EQUAL . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 149
+    arithmetic_expression  go to state 89
+
+
+State 119
+
+   77 arithmetic_expression: expression MINUS . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 150
+    arithmetic_expression  go to state 89
+
+
+State 120
+
+   76 arithmetic_expression: expression PLUS . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 151
+    arithmetic_expression  go to state 89
+
+
+State 121
+
+   74 arithmetic_expression: expression DIV . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 152
+    arithmetic_expression  go to state 89
+
+
+State 122
+
+   75 arithmetic_expression: expression MOD . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 153
+    arithmetic_expression  go to state 89
+
+
+State 123
+
+   73 arithmetic_expression: expression MULT . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 154
+    arithmetic_expression  go to state 89
+
+
+State 124
+
+   50 simple_statement: KWPRINT expression SEMICOLON .
+
+    $default  reduce using rule 50 (simple_statement)
+
+
+State 125
+
+   51 simple_statement: KWREAD variable_reference SEMICOLON .
+
+    $default  reduce using rule 51 (simple_statement)
+
+
+State 126
+
+   57 conditional_statement: KWIF expression KWTHEN . compound_statement KWELSE compound_statement KWEND KWIF
+   58                      | KWIF expression KWTHEN . compound_statement KWEND KWIF
+
+    KWBEGIN  shift, and go to state 22
+
+    compound_statement  go to state 155
+
+
+State 127
+
+   59 while_statement: KWWHILE expression KWDO . compound_statement KWEND KWDO
+
+    KWBEGIN  shift, and go to state 22
+
+    compound_statement  go to state 156
+
+
+State 128
+
+   60 for_statement: KWFOR ID COLONEQUAL . integer_constant KWTO integer_constant KWDO compound_statement KWEND KWDO
+
+    INTEGER      shift, and go to state 47
+    OCT_INTEGER  shift, and go to state 48
+
+    integer_constant  go to state 157
+
+
+State 129
+
+   55 array_indexs: LEFTBRACKET array_index_number . RIGHTBRACKET
+
+    RIGHTBRACKET  shift, and go to state 158
+
+
+State 130
+
+   54 array_index_number: expression .
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    $default  reduce using rule 54 (array_index_number)
+
+
+State 131
+
+   62 fucntion_call_statement: ID LEFTPARENTHESE expressions . RIGHTPARENTHESE SEMICOLON
+
+    RIGHTPARENTHESE  shift, and go to state 159
+
+
+State 132
+
+   65 expressions: expression_list .
+   67 expression_list: expression_list . COMMA expression
+
+    COMMA  shift, and go to state 160
+
+    $default  reduce using rule 65 (expressions)
+
+
+State 133
+
+   66 expression_list: expression .
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    $default  reduce using rule 66 (expression_list)
+
+
+State 134
+
+   56 array_indexs: array_indexs LEFTBRACKET . integer_constant RIGHTBRACKET
+
+    INTEGER      shift, and go to state 47
+    OCT_INTEGER  shift, and go to state 48
+
+    integer_constant  go to state 161
+
+
+State 135
+
+   49 simple_statement: variable_reference COLONEQUAL expression . SEMICOLON
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    SEMICOLON      shift, and go to state 162
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+
+State 136
+
+   20 variable_declaration: KWVAR identifier_list COLON KWARRAY integer_constant KWOF type SEMICOLON .
+
+    $default  reduce using rule 20 (variable_declaration)
+
+
+State 137
+
+    2 function_declaration: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type SEMICOLON .
+
+    $default  reduce using rule 2 (function_declaration)
+
+
+State 138
+
+    4 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type compound_statement . KWEND
+
+    KWEND  shift, and go to state 163
+
+
+State 139
+
+   93 type: KWARRAY integer_constant KWOF . type
+
+    KWARRAY    shift, and go to state 78
+    KWINTEGER  shift, and go to state 27
+    KWBOOLEAN  shift, and go to state 28
+    KWREAL     shift, and go to state 29
+    KWSTRING   shift, and go to state 30
+
+    scalar_type  go to state 79
+    type         go to state 164
+
+
+State 140
+
+   63 function_call_nosemi: ID LEFTPARENTHESE expressions . RIGHTPARENTHESE
+
+    RIGHTPARENTHESE  shift, and go to state 165
+
+
+State 141
+
+   87 arithmetic_expression: LEFTPARENTHESE expression RIGHTPARENTHESE .
+
+    $default  reduce using rule 87 (arithmetic_expression)
+
+
+State 142
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   84                      | expression AND expression .
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 84 (arithmetic_expression)]
+    OR             [reduce using rule 84 (arithmetic_expression)]
+    SMALLER        [reduce using rule 84 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 84 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 84 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 84 (arithmetic_expression)]
+    BIGGER         [reduce using rule 84 (arithmetic_expression)]
+    EQUAL          [reduce using rule 84 (arithmetic_expression)]
+    MINUS          [reduce using rule 84 (arithmetic_expression)]
+    PLUS           [reduce using rule 84 (arithmetic_expression)]
+    DIV            [reduce using rule 84 (arithmetic_expression)]
+    MOD            [reduce using rule 84 (arithmetic_expression)]
+    MULT           [reduce using rule 84 (arithmetic_expression)]
+    $default       reduce using rule 84 (arithmetic_expression)
+
+
+State 143
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+   85                      | expression OR expression .
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 85 (arithmetic_expression)]
+    OR             [reduce using rule 85 (arithmetic_expression)]
+    SMALLER        [reduce using rule 85 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 85 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 85 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 85 (arithmetic_expression)]
+    BIGGER         [reduce using rule 85 (arithmetic_expression)]
+    EQUAL          [reduce using rule 85 (arithmetic_expression)]
+    MINUS          [reduce using rule 85 (arithmetic_expression)]
+    PLUS           [reduce using rule 85 (arithmetic_expression)]
+    DIV            [reduce using rule 85 (arithmetic_expression)]
+    MOD            [reduce using rule 85 (arithmetic_expression)]
+    MULT           [reduce using rule 85 (arithmetic_expression)]
+    $default       reduce using rule 85 (arithmetic_expression)
+
+
+State 144
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   78                      | expression SMALLER expression .
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 78 (arithmetic_expression)]
+    OR             [reduce using rule 78 (arithmetic_expression)]
+    SMALLER        [reduce using rule 78 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 78 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 78 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 78 (arithmetic_expression)]
+    BIGGER         [reduce using rule 78 (arithmetic_expression)]
+    EQUAL          [reduce using rule 78 (arithmetic_expression)]
+    MINUS          [reduce using rule 78 (arithmetic_expression)]
+    PLUS           [reduce using rule 78 (arithmetic_expression)]
+    DIV            [reduce using rule 78 (arithmetic_expression)]
+    MOD            [reduce using rule 78 (arithmetic_expression)]
+    MULT           [reduce using rule 78 (arithmetic_expression)]
+    $default       reduce using rule 78 (arithmetic_expression)
+
+
+State 145
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   79                      | expression SMALLEREQUAL expression .
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 79 (arithmetic_expression)]
+    OR             [reduce using rule 79 (arithmetic_expression)]
+    SMALLER        [reduce using rule 79 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 79 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 79 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 79 (arithmetic_expression)]
+    BIGGER         [reduce using rule 79 (arithmetic_expression)]
+    EQUAL          [reduce using rule 79 (arithmetic_expression)]
+    MINUS          [reduce using rule 79 (arithmetic_expression)]
+    PLUS           [reduce using rule 79 (arithmetic_expression)]
+    DIV            [reduce using rule 79 (arithmetic_expression)]
+    MOD            [reduce using rule 79 (arithmetic_expression)]
+    MULT           [reduce using rule 79 (arithmetic_expression)]
+    $default       reduce using rule 79 (arithmetic_expression)
+
+
+State 146
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   80                      | expression SMALLERBIGGER expression .
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 80 (arithmetic_expression)]
+    OR             [reduce using rule 80 (arithmetic_expression)]
+    SMALLER        [reduce using rule 80 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 80 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 80 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 80 (arithmetic_expression)]
+    BIGGER         [reduce using rule 80 (arithmetic_expression)]
+    EQUAL          [reduce using rule 80 (arithmetic_expression)]
+    MINUS          [reduce using rule 80 (arithmetic_expression)]
+    PLUS           [reduce using rule 80 (arithmetic_expression)]
+    DIV            [reduce using rule 80 (arithmetic_expression)]
+    MOD            [reduce using rule 80 (arithmetic_expression)]
+    MULT           [reduce using rule 80 (arithmetic_expression)]
+    $default       reduce using rule 80 (arithmetic_expression)
+
+
+State 147
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   81                      | expression BIGGEREQUAL expression .
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 81 (arithmetic_expression)]
+    OR             [reduce using rule 81 (arithmetic_expression)]
+    SMALLER        [reduce using rule 81 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 81 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 81 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 81 (arithmetic_expression)]
+    BIGGER         [reduce using rule 81 (arithmetic_expression)]
+    EQUAL          [reduce using rule 81 (arithmetic_expression)]
+    MINUS          [reduce using rule 81 (arithmetic_expression)]
+    PLUS           [reduce using rule 81 (arithmetic_expression)]
+    DIV            [reduce using rule 81 (arithmetic_expression)]
+    MOD            [reduce using rule 81 (arithmetic_expression)]
+    MULT           [reduce using rule 81 (arithmetic_expression)]
+    $default       reduce using rule 81 (arithmetic_expression)
+
+
+State 148
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   82                      | expression BIGGER expression .
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 82 (arithmetic_expression)]
+    OR             [reduce using rule 82 (arithmetic_expression)]
+    SMALLER        [reduce using rule 82 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 82 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 82 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 82 (arithmetic_expression)]
+    BIGGER         [reduce using rule 82 (arithmetic_expression)]
+    EQUAL          [reduce using rule 82 (arithmetic_expression)]
+    MINUS          [reduce using rule 82 (arithmetic_expression)]
+    PLUS           [reduce using rule 82 (arithmetic_expression)]
+    DIV            [reduce using rule 82 (arithmetic_expression)]
+    MOD            [reduce using rule 82 (arithmetic_expression)]
+    MULT           [reduce using rule 82 (arithmetic_expression)]
+    $default       reduce using rule 82 (arithmetic_expression)
+
+
+State 149
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   83                      | expression EQUAL expression .
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 83 (arithmetic_expression)]
+    OR             [reduce using rule 83 (arithmetic_expression)]
+    SMALLER        [reduce using rule 83 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 83 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 83 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 83 (arithmetic_expression)]
+    BIGGER         [reduce using rule 83 (arithmetic_expression)]
+    EQUAL          [reduce using rule 83 (arithmetic_expression)]
+    MINUS          [reduce using rule 83 (arithmetic_expression)]
+    PLUS           [reduce using rule 83 (arithmetic_expression)]
+    DIV            [reduce using rule 83 (arithmetic_expression)]
+    MOD            [reduce using rule 83 (arithmetic_expression)]
+    MULT           [reduce using rule 83 (arithmetic_expression)]
+    $default       reduce using rule 83 (arithmetic_expression)
+
+
+State 150
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   77                      | expression MINUS expression .
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 77 (arithmetic_expression)]
+    OR             [reduce using rule 77 (arithmetic_expression)]
+    SMALLER        [reduce using rule 77 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 77 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 77 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 77 (arithmetic_expression)]
+    BIGGER         [reduce using rule 77 (arithmetic_expression)]
+    EQUAL          [reduce using rule 77 (arithmetic_expression)]
+    $default       reduce using rule 77 (arithmetic_expression)
+
+
+State 151
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   76                      | expression PLUS expression .
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 76 (arithmetic_expression)]
+    OR             [reduce using rule 76 (arithmetic_expression)]
+    SMALLER        [reduce using rule 76 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 76 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 76 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 76 (arithmetic_expression)]
+    BIGGER         [reduce using rule 76 (arithmetic_expression)]
+    EQUAL          [reduce using rule 76 (arithmetic_expression)]
+    $default       reduce using rule 76 (arithmetic_expression)
+
+
+State 152
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   74                      | expression DIV expression .
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 74 (arithmetic_expression)]
+    OR             [reduce using rule 74 (arithmetic_expression)]
+    SMALLER        [reduce using rule 74 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 74 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 74 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 74 (arithmetic_expression)]
+    BIGGER         [reduce using rule 74 (arithmetic_expression)]
+    EQUAL          [reduce using rule 74 (arithmetic_expression)]
+    $default       reduce using rule 74 (arithmetic_expression)
+
+
+State 153
+
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   75                      | expression MOD expression .
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MULT           shift, and go to state 123
+
+    AND            [reduce using rule 75 (arithmetic_expression)]
+    OR             [reduce using rule 75 (arithmetic_expression)]
+    SMALLER        [reduce using rule 75 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 75 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 75 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 75 (arithmetic_expression)]
+    BIGGER         [reduce using rule 75 (arithmetic_expression)]
+    EQUAL          [reduce using rule 75 (arithmetic_expression)]
+    $default       reduce using rule 75 (arithmetic_expression)
+
+
+State 154
+
+   73 arithmetic_expression: expression . MULT expression
+   73                      | expression MULT expression .
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+
+    AND            [reduce using rule 73 (arithmetic_expression)]
+    OR             [reduce using rule 73 (arithmetic_expression)]
+    SMALLER        [reduce using rule 73 (arithmetic_expression)]
+    SMALLEREQUAL   [reduce using rule 73 (arithmetic_expression)]
+    SMALLERBIGGER  [reduce using rule 73 (arithmetic_expression)]
+    BIGGEREQUAL    [reduce using rule 73 (arithmetic_expression)]
+    BIGGER         [reduce using rule 73 (arithmetic_expression)]
+    EQUAL          [reduce using rule 73 (arithmetic_expression)]
+    $default       reduce using rule 73 (arithmetic_expression)
+
+
+State 155
+
+   57 conditional_statement: KWIF expression KWTHEN compound_statement . KWELSE compound_statement KWEND KWIF
+   58                      | KWIF expression KWTHEN compound_statement . KWEND KWIF
+
+    KWEND   shift, and go to state 166
+    KWELSE  shift, and go to state 167
+
+
+State 156
+
+   59 while_statement: KWWHILE expression KWDO compound_statement . KWEND KWDO
+
+    KWEND  shift, and go to state 168
+
+
+State 157
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant . KWTO integer_constant KWDO compound_statement KWEND KWDO
+
+    KWTO  shift, and go to state 169
+
+
+State 158
+
+   55 array_indexs: LEFTBRACKET array_index_number RIGHTBRACKET .
+
+    $default  reduce using rule 55 (array_indexs)
+
+
+State 159
+
+   62 fucntion_call_statement: ID LEFTPARENTHESE expressions RIGHTPARENTHESE . SEMICOLON
+
+    SEMICOLON  shift, and go to state 170
+
+
+State 160
+
+   67 expression_list: expression_list COMMA . expression
+
+    INTEGER         shift, and go to state 31
+    KWTRUE          shift, and go to state 32
+    KWFALSE         shift, and go to state 33
+    OCT_INTEGER     shift, and go to state 34
+    FLOAT           shift, and go to state 35
+    SCIENTIFIC      shift, and go to state 36
+    STRING          shift, and go to state 37
+    ID              shift, and go to state 81
+    NOT             shift, and go to state 82
+    MINUS           shift, and go to state 83
+    LEFTPARENTHESE  shift, and go to state 84
+
+    literal_constant       go to state 85
+    variable_reference     go to state 86
+    function_call_nosemi   go to state 87
+    expression             go to state 171
+    arithmetic_expression  go to state 89
+
+
+State 161
+
+   56 array_indexs: array_indexs LEFTBRACKET integer_constant . RIGHTBRACKET
+
+    RIGHTBRACKET  shift, and go to state 172
+
+
+State 162
+
+   49 simple_statement: variable_reference COLONEQUAL expression SEMICOLON .
+
+    $default  reduce using rule 49 (simple_statement)
+
+
+State 163
+
+    4 function_definition: ID LEFTPARENTHESE formal_argument_list RIGHTPARENTHESE COLON scalar_type compound_statement KWEND .
+
+    $default  reduce using rule 4 (function_definition)
+
+
+State 164
+
+   93 type: KWARRAY integer_constant KWOF type .
+
+    $default  reduce using rule 93 (type)
+
+
+State 165
+
+   63 function_call_nosemi: ID LEFTPARENTHESE expressions RIGHTPARENTHESE .
+
+    $default  reduce using rule 63 (function_call_nosemi)
+
+
+State 166
+
+   58 conditional_statement: KWIF expression KWTHEN compound_statement KWEND . KWIF
+
+    KWIF  shift, and go to state 173
+
+
+State 167
+
+   57 conditional_statement: KWIF expression KWTHEN compound_statement KWELSE . compound_statement KWEND KWIF
+
+    KWBEGIN  shift, and go to state 22
+
+    compound_statement  go to state 174
+
+
+State 168
+
+   59 while_statement: KWWHILE expression KWDO compound_statement KWEND . KWDO
+
+    KWDO  shift, and go to state 175
+
+
+State 169
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant KWTO . integer_constant KWDO compound_statement KWEND KWDO
+
+    INTEGER      shift, and go to state 47
+    OCT_INTEGER  shift, and go to state 48
+
+    integer_constant  go to state 176
+
+
+State 170
+
+   62 fucntion_call_statement: ID LEFTPARENTHESE expressions RIGHTPARENTHESE SEMICOLON .
+
+    $default  reduce using rule 62 (fucntion_call_statement)
+
+
+State 171
+
+   67 expression_list: expression_list COMMA expression .
+   73 arithmetic_expression: expression . MULT expression
+   74                      | expression . DIV expression
+   75                      | expression . MOD expression
+   76                      | expression . PLUS expression
+   77                      | expression . MINUS expression
+   78                      | expression . SMALLER expression
+   79                      | expression . SMALLEREQUAL expression
+   80                      | expression . SMALLERBIGGER expression
+   81                      | expression . BIGGEREQUAL expression
+   82                      | expression . BIGGER expression
+   83                      | expression . EQUAL expression
+   84                      | expression . AND expression
+   85                      | expression . OR expression
+
+    AND            shift, and go to state 111
+    OR             shift, and go to state 112
+    SMALLER        shift, and go to state 113
+    SMALLEREQUAL   shift, and go to state 114
+    SMALLERBIGGER  shift, and go to state 115
+    BIGGEREQUAL    shift, and go to state 116
+    BIGGER         shift, and go to state 117
+    EQUAL          shift, and go to state 118
+    MINUS          shift, and go to state 119
+    PLUS           shift, and go to state 120
+    DIV            shift, and go to state 121
+    MOD            shift, and go to state 122
+    MULT           shift, and go to state 123
+
+    $default  reduce using rule 67 (expression_list)
+
+
+State 172
+
+   56 array_indexs: array_indexs LEFTBRACKET integer_constant RIGHTBRACKET .
+
+    $default  reduce using rule 56 (array_indexs)
+
+
+State 173
+
+   58 conditional_statement: KWIF expression KWTHEN compound_statement KWEND KWIF .
+
+    $default  reduce using rule 58 (conditional_statement)
+
+
+State 174
+
+   57 conditional_statement: KWIF expression KWTHEN compound_statement KWELSE compound_statement . KWEND KWIF
+
+    KWEND  shift, and go to state 177
+
+
+State 175
+
+   59 while_statement: KWWHILE expression KWDO compound_statement KWEND KWDO .
+
+    $default  reduce using rule 59 (while_statement)
+
+
+State 176
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant KWTO integer_constant . KWDO compound_statement KWEND KWDO
+
+    KWDO  shift, and go to state 178
+
+
+State 177
+
+   57 conditional_statement: KWIF expression KWTHEN compound_statement KWELSE compound_statement KWEND . KWIF
+
+    KWIF  shift, and go to state 179
+
+
+State 178
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant KWTO integer_constant KWDO . compound_statement KWEND KWDO
+
+    KWBEGIN  shift, and go to state 22
+
+    compound_statement  go to state 180
+
+
+State 179
+
+   57 conditional_statement: KWIF expression KWTHEN compound_statement KWELSE compound_statement KWEND KWIF .
+
+    $default  reduce using rule 57 (conditional_statement)
+
+
+State 180
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant KWTO integer_constant KWDO compound_statement . KWEND KWDO
+
+    KWEND  shift, and go to state 181
+
+
+State 181
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant KWTO integer_constant KWDO compound_statement KWEND . KWDO
+
+    KWDO  shift, and go to state 182
+
+
+State 182
+
+   60 for_statement: KWFOR ID COLONEQUAL integer_constant KWTO integer_constant KWDO compound_statement KWEND KWDO .
+
+    $default  reduce using rule 60 (for_statement)
